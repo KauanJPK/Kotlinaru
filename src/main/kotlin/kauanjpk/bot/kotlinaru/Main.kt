@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent
 import kauanjpk.bot.kotlinaru.services.GeneralService
 import io.github.cdimascio.dotenv.dotenv
 import kauanjpk.bot.kotlinaru.audio.GuildMusicManager
-import services.VoiceService
+import kauanjpk.bot.kotlinaru.services.VoiceService
 
 fun main() {
     // Carregar .env
@@ -20,7 +20,7 @@ fun main() {
     // Iniciar JDA
     val jda = JDABuilder.createDefault(token)
         .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS)
-        .setActivity(Activity.playing("🎶 Música no Discord"))
+        .setActivity(Activity.playing("🎶 Música no Discord - Made by KauanJPK"))
         .build()
 
     // Player manager (para música)

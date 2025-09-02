@@ -1,28 +1,41 @@
 package kauanjpk.bot.kotlinaru.commands
 
-import services.VoiceService
+import kauanjpk.bot.kotlinaru.services.VoiceService
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
+import net.dv8tion.jda.api.interactions.commands.build.Commands
 
-/**
- * Comandos de voz: /play, /skip, /stop
- */
+
 class VoiceCommands(private val voiceService: VoiceService) : ListenerAdapter() {
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         when (event.name) {
             "play" -> {
-                val query = event.getOption("musica")?.asString
-                if (query.isNullOrBlank()) {
-                    event.reply("❌ Informe o nome ou link da música!").queue()
-                    return
+                val query = event.getOption("query")?.asString
+                if (query != null && query.isNotBlank()) {
+                    voiceService.play(event, query)
+                } else {
+                    event.reply("❌ Você precisa informar um nome ou link da música.").queue()
                 }
-                voiceService.play(event, query)
             }
 
-            "skip" -> voiceService.skip(event)
-            "stop" -> voiceService.stop(event)
+            "skip" -> {
+                voiceService.skip(event)
+            }
 
+            "stop" -> {
+                voiceService.stop(event)
+            }
+
+            "queue" -> {
+                voiceService.queue(event)
+            }
+            "pause" -> {
+                voiceService.pause(event)
+            }
         }
     }
+
+
 }
+

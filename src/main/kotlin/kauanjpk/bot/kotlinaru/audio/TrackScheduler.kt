@@ -4,32 +4,38 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
-import java.util.concurrent.BlockingQueue
-import java.util.concurrent.LinkedBlockingQueue
+import net.dv8tion.jda.api.entities.Guild
+import java.util.*
 
-class TrackScheduler(private val player: AudioPlayer) : AudioEventAdapter() {
-
-    val queue: BlockingQueue<AudioTrack> = LinkedBlockingQueue()
+class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) : AudioEventAdapter() {
+    val queue: Queue<AudioTrack> = LinkedList()
 
     fun queue(track: AudioTrack) {
-        if (!player.startTrack(track, true)) {
-            queue.offer(track)
-        }
+        queue.offer(track)
+        if (player.playingTrack == null) nextTrack()
     }
 
     fun nextTrack() {
         val next = queue.poll()
-        player.startTrack(next, false)
+        if (next != null) {
+            player.playTrack(next)
+        } else {
+            // Apenas desconecta se não houver mais música na fila
+            if (player.playingTrack == null) {
+                guild.audioManager.closeAudioConnection()
+            }
+        }
     }
+
+
 
     fun stop() {
         queue.clear()
         player.stopTrack()
+        guild.audioManager.closeAudioConnection()
     }
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        if (endReason.mayStartNext) {
-            nextTrack()
-        }
+        if (endReason.mayStartNext) nextTrack()
     }
 }

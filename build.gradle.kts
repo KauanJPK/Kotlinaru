@@ -1,45 +1,22 @@
 plugins {
-    kotlin("jvm") version "1.8.0"
+    kotlin("jvm") version "1.9.0"
     application
-    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
-
-
-group = "com.example"
-version = "1.0"
 
 repositories {
     mavenCentral()
-    maven("https://jitpack.io") // necessário para LavaPlayer fork
+    maven("https://jitpack.io")
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-
-    // JDA 5
-    implementation("net.dv8tion:JDA:5.0.0-beta.15") {
-        exclude(module = "opus-java") // opcional se você não usar voz nativa
-    }
-
-    // LavaPlayer fork (sem dependência comum)
-    implementation("dev.arbjerg:lavaplayer:2.2.2")
-
-    // Dotenv para carregar variáveis de ambiente
+    implementation("dev.arbjerg:lavaplayer:2.2.2") // já inclui YouTube
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    implementation("net.dv8tion:JDA:5.0.0-beta.15") // ou sua versão atual
 }
-
 
 application {
     mainClass.set("kauanjpk.bot.kotlinaru.MainKt")
 }
-
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17)) // define JVM 17 para Kotlin e Java
-    }
-}
-
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(17) // usa Java 20
 }

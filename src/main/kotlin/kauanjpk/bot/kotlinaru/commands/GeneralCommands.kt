@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import kauanjpk.bot.kotlinaru.services.GeneralService
 
-class GeneralCommands  (
+open class GeneralCommands  (
     private val service: GeneralService
 ) : ListenerAdapter() {
 

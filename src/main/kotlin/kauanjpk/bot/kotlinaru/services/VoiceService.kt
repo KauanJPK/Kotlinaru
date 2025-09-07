@@ -30,9 +30,10 @@ open class VoiceService(
         if (!audioManager.isConnected) {
             audioManager.openAudioConnection(memberChannel)
             audioManager.sendingHandler = musicManager.sendHandler()
+        }else{
+            audioManager.closeAudioConnection()
         }
 
-        // defer reply para não dar erro de já respondido
         event.deferReply().queue { hook ->
 
 
@@ -49,7 +50,7 @@ open class VoiceService(
                     val tracks = if (playlist.isSearchResult) listOf(playlist.tracks.first()) else playlist.tracks
                     tracks.forEach { musicManager.scheduler.queue(it) }
                     val firstTitle = tracks.firstOrNull()?.info?.title ?: "Desconhecida"
-                    hook.sendMessage("🎶 Adicionado ${tracks.size} músicas! Começando com: $firstTitle").queue()
+                    hook.sendMessage("🎶 Adicionado ${tracks.count()} músicas! Começando com: $firstTitle").queue()
                 }
 
                 override fun noMatches() {

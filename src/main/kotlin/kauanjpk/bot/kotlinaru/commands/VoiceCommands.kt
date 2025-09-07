@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.interactions.commands.build.Commands
 
 
-class VoiceCommands(private val voiceService: VoiceService) : ListenerAdapter() {
+class VoiceCommands(private val voiceService: VoiceService): ListenerAdapter() {
 
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         when (event.name) {

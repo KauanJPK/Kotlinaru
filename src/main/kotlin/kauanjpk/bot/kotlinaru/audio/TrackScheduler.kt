@@ -7,7 +7,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import net.dv8tion.jda.api.entities.Guild
 import java.util.*
 
-class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) : AudioEventAdapter() {
+open class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) : AudioEventAdapter() {
     val queue: Queue<AudioTrack> = LinkedList()
 
     fun queue(track: AudioTrack) {
@@ -36,6 +36,8 @@ class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) 
     }
 
     override fun onTrackEnd(player: AudioPlayer, track: AudioTrack, endReason: AudioTrackEndReason) {
-        if (endReason.mayStartNext) nextTrack()
+        if (endReason.mayStartNext) nextTrack() else if (endReason==AudioTrackEndReason.FINISHED && queue.isEmpty()) {
+            guild.audioManager.closeAudioConnection()
+        }
     }
 }

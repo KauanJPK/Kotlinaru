@@ -14,6 +14,7 @@ build/
 *.ipr
 src/main/resources/.env
 out/
+.env
 
 ### Kotlin ###
 .kotlin

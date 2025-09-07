@@ -2,7 +2,7 @@ package kauanjpk.bot.kotlinaru.services
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 
-class GeneralService {
+open class GeneralService {
     fun ping(event: SlashCommandInteractionEvent) {
         val time = System.currentTimeMillis()
         event.reply("🏓 Pong!").setEphemeral(true)

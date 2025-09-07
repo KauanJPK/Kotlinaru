@@ -9,9 +9,9 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.arbjerg:lavaplayer:2.2.2") // já inclui YouTube
+    implementation("dev.arbjerg:lavaplayer:2.2.2")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    implementation("net.dv8tion:JDA:5.0.0-beta.15") // ou sua versão atual
+    implementation("net.dv8tion:JDA:5.0.0-beta.15")
 }
 
 application {

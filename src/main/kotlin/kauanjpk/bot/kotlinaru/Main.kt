@@ -10,6 +10,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent
 import kauanjpk.bot.kotlinaru.services.GeneralService
 import io.github.cdimascio.dotenv.dotenv
 import kauanjpk.bot.kotlinaru.audio.GuildMusicManager
+import kauanjpk.bot.kotlinaru.commands.ModerationCommands
+import kauanjpk.bot.kotlinaru.services.ModerationService
 import kauanjpk.bot.kotlinaru.services.VoiceService
 
 fun main() {
@@ -31,10 +33,12 @@ fun main() {
     val musicManagers = mutableMapOf<Long, GuildMusicManager>()
     val voiceService = VoiceService(playerManager, musicManagers)
     val generalService = GeneralService()
-
+    val moderationService = ModerationService()
     // Registrar listeners
     jda.addEventListener(GeneralCommands(generalService))
     jda.addEventListener(VoiceCommands(voiceService))
+    jda.addEventListener(ModerationCommands(moderationService))
+
 
     // Registrar comandos de slash
     jda.awaitReady()

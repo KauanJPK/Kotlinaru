@@ -1,12 +1,9 @@
 package kauanjpk.bot.kotlinaru.commands
 
 import net.dv8tion.jda.api.JDA
-import net.dv8tion.jda.api.interactions.commands.Command
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.Commands
 
-
-//this object is where control the settings of a slash command
 object SetFunctions {
     fun register(jda: JDA) {
         jda.updateCommands()
@@ -14,17 +11,19 @@ object SetFunctions {
                 // Gerais
                 Commands.slash("ping", "Mostra o tempo de resposta do bot"),
                 Commands.slash("help", "Mostra a lista de comandos"),
+
+                // Música
                 Commands.slash("play", "Toca uma música").addOption(
-                        OptionType.STRING,
-                        "query",
-                        "Nome ou link da música",
-                        true
-                    ),
-                // Musicas
+                    OptionType.STRING,
+                    "query",
+                    "Nome ou link da música",
+                    true
+                ),
                 Commands.slash("skip", "Pula a música atual"),
                 Commands.slash("stop", "Para a música e limpa a fila"),
                 Commands.slash("queue", "Mostra a fila de músicas"),
                 Commands.slash("pause", "Pausa/retoma a música"),
+
                 // Moderação
                 Commands.slash("ban", "Bane um usuário do servidor").addOption(
                     OptionType.USER,
@@ -36,7 +35,8 @@ object SetFunctions {
                     "reason",
                     "Motivo do banimento",
                     false
-                ).addOption(OptionType.INTEGER,
+                ).addOption(
+                    OptionType.INTEGER,
                     "delete_days",
                     "Número de dias de mensagens a serem deletadas (0-7, padrão: 0)",
                     false
@@ -57,12 +57,12 @@ object SetFunctions {
                     "user",
                     "Usuário a ser silenciado",
                     true
-                    ).addOption(
+                ).addOption(
                     OptionType.STRING,
                     "reason",
                     "Motivo do silêncio",
                     false
-                    ).addOption(
+                ).addOption(
                     OptionType.INTEGER,
                     "duration",
                     "Duração do silêncio em minutos (padrão: 10)",
@@ -73,12 +73,26 @@ object SetFunctions {
                     "user",
                     "Usuário a ser dessilenciado",
                     true
-                    ).addOption(
+                ).addOption(
                     OptionType.STRING,
                     "reason",
                     "Motivo para remover o silêncio",
                     false
-                )
+                ),
+
+                // Welcome
+                Commands.slash("set-welcome-channel", "Define o canal de boas-vindas")
+                    .addOption(
+                        OptionType.CHANNEL,
+                        "channel",
+                        "Canal de texto para mensagens de boas-vindas",
+                        true
+                    ),
+                Commands.slash("set-welcome-embed", "Define o embed de boas-vindas customizado")
+                    .addOption(OptionType.STRING, "title", "Título do embed", false)
+                    .addOption(OptionType.STRING, "description", "Descrição do embed", false)
+                    .addOption(OptionType.STRING, "color", "Cor do embed em hexadecimal (ex: #00FF00)", false)
+                    .addOption(OptionType.STRING, "image", "URL da imagem ou GIF do embed", false)
             )
             .queue()
     }

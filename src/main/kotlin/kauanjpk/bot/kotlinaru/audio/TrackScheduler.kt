@@ -7,7 +7,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason
 import net.dv8tion.jda.api.entities.Guild
 import java.util.*
 
-open class TrackScheduler(private val player: AudioPlayer, private val guild: Guild) : AudioEventAdapter() {
+open class TrackScheduler(val player: AudioPlayer, private val guild: Guild) : AudioEventAdapter() {
     val queue: Queue<AudioTrack> = LinkedList()
 
     fun queue(track: AudioTrack) {
@@ -19,8 +19,11 @@ open class TrackScheduler(private val player: AudioPlayer, private val guild: Gu
         val next = queue.poll()
         if (next != null) {
             player.playTrack(next)
-        } else {
-            // Apenas desconecta se não houver mais música na fila
+        }
+        if (player.playingTrack == null) {
+            guild.audioManager.closeAudioConnection()
+        }
+        else {
             if (player.playingTrack == null) {
                 guild.audioManager.closeAudioConnection()
             }

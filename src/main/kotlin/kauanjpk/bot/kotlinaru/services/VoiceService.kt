@@ -35,9 +35,6 @@ open class VoiceService(
         }
 
         event.deferReply().queue { hook ->
-
-
-
             val searchQuery = if (query.startsWith("http")) query else "scsearch:$query"
 
             playerManager.loadItemOrdered(musicManager, searchQuery, object : AudioLoadResultHandler {
@@ -60,10 +57,8 @@ open class VoiceService(
                 override fun loadFailed(exception: FriendlyException) {
                     exception.printStackTrace()
 
-                    // Se houver música tocando, ignore a mensagem
                     val musicManager = getMusicManager(event.guild!!)
                     if (musicManager.player.playingTrack != null) {
-                        // Música tocando, não enviar mensagem de erro
                         return
                     }
 
@@ -78,13 +73,30 @@ open class VoiceService(
 
     fun skip(event: SlashCommandInteractionEvent) {
         val guildId = event.guild!!.idLong
-        musicManagers[guildId]?.scheduler?.nextTrack()
-        event.reply("⏭️ Pulou a música!").queue()
+        val scheduler = musicManagers[guildId]?.scheduler
+        val audioManager = event.guild!!.audioManager
+
+        if (scheduler == null) {
+            event.reply("⚠️ Nenhum player ativo.").queue()
+            return
+        }
+        if (scheduler.queue.isEmpty()) {
+            event.reply("⏹️ Fila vazia. Reprodução encerrada. Saindo do canal!").queue()
+            audioManager.closeAudioConnection()
+        } else {
+            scheduler.nextTrack()
+            event.reply("⏭️ Pulou para a próxima música!").queue()
+        }
     }
 
     fun stop(event: SlashCommandInteractionEvent) {
         val guildId = event.guild!!.idLong
+        val scheduler = musicManagers[guildId]?.scheduler
         musicManagers[guildId]?.scheduler?.stop()
+        if(scheduler == null) {
+            event.reply("⚠️ Nenhum player ativo.").queue()
+            return
+        }
         event.reply("⏹️ Música parada!").queue()
     }
 

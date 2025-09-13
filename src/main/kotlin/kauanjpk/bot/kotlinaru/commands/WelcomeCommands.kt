@@ -8,7 +8,6 @@ class WelcomeCommands(private val service: WelcomeService) : ListenerAdapter() {
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         when (event.name) {
             "set-welcome-channel" -> service.setChannel(event)
-
             "set-welcome-embed" -> service.setCustomEmbed(event)
         }
     }

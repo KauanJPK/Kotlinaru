@@ -1,7 +1,7 @@
 ![Kotlinaru](https://socialify.git.ci/KauanJPK/Kotlinaru/image?font=Bitter&language=1&name=1&owner=1&stargazers=1&theme=Dark)
 # Kotlinaru
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/KauanJPK/Kotlinaru/ci.yml?branch=main&label=Build)](https://github.com/KauanJPK/Kotlinaru/actions)
+![Build Status](https://img.shields.io/badge/build-onworking-blue)
 [![License](https://img.shields.io/github/license/KauanJPK/Kotlinaru)](https://github.com/KauanJPK/Kotlinaru/blob/main/LICENSE)
 [![Top Language](https://img.shields.io/github/languages/top/KauanJPK/Kotlinaru)](https://github.com/KauanJPK/Kotlinaru)
 [![Contributors](https://img.shields.io/github/contributors/KauanJPK/Kotlinaru)](https://github.com/KauanJPK/Kotlinaru/graphs/contributors)

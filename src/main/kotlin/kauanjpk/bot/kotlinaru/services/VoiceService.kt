@@ -19,7 +19,7 @@ class VoiceService(
         val guild = event.guild ?: return
         val musicManager = getMusicManager(guild)
         val memberChannel = event.member?.voiceState?.channel ?: run {
-            event.reply("❌ Você precisa estar em um canal de voz!").queue()
+            event.reply("❌ Você precisa estar em um canal de voz!").setEphemeral(true).queue()
             return
         }
 
@@ -28,31 +28,33 @@ class VoiceService(
 
         val searchQuery = if (query.startsWith("http")) query else "scsearch:$query"
 
+        event.deferReply().queue()
+
         playerManager.loadItemOrdered(musicManager, searchQuery, object : AudioLoadResultHandler {
             override fun trackLoaded(track: AudioTrack) {
                 musicManager.scheduler.queue(track)
-                event.reply("🎶 Tocando agora: ${track.info.title}").queue()
+                event.hook.editOriginal("🎶 Tocando agora: **${track.info.title}**").queue()
             }
 
             override fun playlistLoaded(playlist: AudioPlaylist) {
                 val tracks = if (playlist.isSearchResult) listOf(playlist.tracks.first()) else playlist.tracks
                 tracks.forEach { musicManager.scheduler.queue(it) }
                 val firstTitle = tracks.firstOrNull()?.info?.title ?: "Desconhecida"
-                event.reply("🎶 Adicionado ${tracks.size} músicas! Começando com: $firstTitle").queue()
+                event.hook.editOriginal("🎶 Adicionado ${tracks.size} músicas! Começando com: **$firstTitle**").queue()
             }
 
             override fun noMatches() {
-                event.reply("❌ Nenhum resultado encontrado.").queue()
+                event.hook.editOriginal("❌ Nenhum resultado encontrado.").queue()
             }
 
             override fun loadFailed(exception: FriendlyException) {
                 exception.printStackTrace()
-                event.reply("⚠️ Erro ao carregar a música. Tente usar um link direto: ${exception.message}")
-                    .queue()
+                event.hook.editOriginal("⚠️ Erro ao carregar a música. Tente usar um link direto.\n> ${exception.message}").queue()
                 guild.audioManager.closeAudioConnection()
             }
         })
     }
+
 
     fun skip(event: SlashCommandInteractionEvent) {
         val musicManager = musicManagers[event.guild!!.idLong] ?: return

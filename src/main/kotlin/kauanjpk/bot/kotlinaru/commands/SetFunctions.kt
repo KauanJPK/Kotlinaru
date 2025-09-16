@@ -81,19 +81,25 @@ object SetFunctions {
                 ),
 
                 // Welcome
-                Commands.slash("set-welcome-channel", "Define o canal de boas-vindas")
-                    .addOption(
-                        OptionType.CHANNEL,
-                        "channel",
-                        "Canal de texto para mensagens de boas-vindas",
-                        true
-                    ),
-                Commands.slash("set-welcome-embed", "Define o embed de boas-vindas customizado")
-                    .addOption(OptionType.STRING, "title", "Título do embed", false)
-                    .addOption(OptionType.STRING, "description", "Descrição do embed", false)
-                    .addOption(OptionType.STRING, "color", "Cor do embed em hexadecimal (ex: #00FF00)", false)
-                    .addOption(OptionType.STRING, "image", "URL da imagem ou GIF do embed", false)
-            )
-            .queue()
+                Commands.slash("setwelcomechannel", "Define o canal de boas-vindas")
+        .addOption(OptionType.CHANNEL, "channel", "Canal de texto para mensagens de boas-vindas", true),
+
+        Commands.slash("setcustomembed", "Define um embed de boas-vindas customizado")
+            .addOption(OptionType.STRING, "title", "Título do embed", false)
+            .addOption(OptionType.STRING, "description", "Descrição do embed (use {user} para mencionar)", false)
+            .addOption(OptionType.STRING, "color", "Cor em hexadecimal (#RRGGBB)", false)
+            .addOption(OptionType.STRING, "image_url", "URL da imagem principal", false)
+            .addOption(OptionType.STRING, "thumbnail_url", "URL da thumbnail", false)
+            .addOption(OptionType.STRING, "footer", "Texto do rodapé", false)
+            .addOption(OptionType.STRING, "footer_icon_url", "URL do ícone do rodapé", false)
+            .addOption(OptionType.STRING, "author", "Nome do autor", false)
+            .addOption(OptionType.STRING, "author_icon_url", "URL do ícone do autor", false)
+            .addOption(OptionType.STRING, "author_url", "URL clicável do autor", false),
+
+         Commands.slash("resetcustomembed", "Reseta o embed de boas-vindas para o padrão"),
+
+         Commands.slash("testwelcome", "Testa a mensagem de boas-vindas no servidor")
+            ).queue()
+
     }
 }

@@ -10,10 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.arbjerg:lavaplayer:2.2.2")
-    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    implementation("net.dv8tion:JDA:5.0.0-beta.15")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("net.dv8tion:JDA:5.0.0-beta.15")
+    implementation("dev.arbjerg:lavaplayer:2.2.2") // Lavaplayer atualizado
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 }
 
 application {
@@ -21,5 +21,5 @@ application {
 }
 
 kotlin {
-    jvmToolchain(17) // usa Java 17
+    jvmToolchain(17)
 }

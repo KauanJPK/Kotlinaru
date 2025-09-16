@@ -7,8 +7,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 class WelcomeCommands(private val service: WelcomeService) : ListenerAdapter() {
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
         when (event.name) {
-            "set-welcome-channel" -> service.setChannel(event)
-            "set-welcome-embed" -> service.setCustomEmbed(event)
+            "setwelcomechannel" -> service.setChannel(event)
+            "setcustomembed" -> service.setCustomEmbed(event)
+            "resetcustomembed" -> service.resetCustomEmbed(event)
+            "testwelcome" -> service.testWelcome(event)
         }
     }
 }

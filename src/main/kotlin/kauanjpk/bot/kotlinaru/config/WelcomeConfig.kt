@@ -9,13 +9,21 @@ data class WelcomeEmbedData(
     val title: String = "Bem-vindo!",
     val description: String = "Seja bem-vindo ao servidor!",
     val color: Int = 0x00FF00,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val thumbnailUrl: String? = null,
+    val footer: String? = null,
+    val footerIconUrl: String? = null,
+    val author: String? = null,
+    val authorUrl: String? = null,
+    val authorIconUrl: String? = null
 )
+
 @Serializable
 data class WelcomeConfig(
     val guildChannels: MutableMap<Long, Long> = mutableMapOf(), // guildId -> channelId
     val customEmbeds: MutableMap<Long, WelcomeEmbedData> = mutableMapOf() // guildId -> embed customizado
 )
+
 @Serializable
 object Config {
     private val file = File("welcome_config.json")

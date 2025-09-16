@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.UserSnowflake
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Role
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -12,7 +13,7 @@ object TaskScheduler {
     val scheduler = Executors.newScheduledThreadPool(1)
 }
 
-open class ModerationService {
+class ModerationService{
 
     fun ban(event: SlashCommandInteractionEvent) {
         val userOption = event.getOption("user")?.asUser
@@ -96,7 +97,7 @@ open class ModerationService {
     private fun aplicarMute(
         event: SlashCommandInteractionEvent,
         member: Member,
-        mutedRole: net.dv8tion.jda.api.entities.Role,
+        mutedRole: Role,
         reason: String,
         duration: Int
     ) {

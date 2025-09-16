@@ -6,9 +6,13 @@ import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.audio.AudioSendHandler
 import java.nio.ByteBuffer
 
-class GuildMusicManager(playerManager: AudioPlayerManager, guild: Guild) {
+class GuildMusicManager(playerManager: AudioPlayerManager, val guild: Guild) {
     val player: AudioPlayer = playerManager.createPlayer()
     val scheduler: TrackScheduler = TrackScheduler(player, guild)
+
+    init {
+        player.addListener(scheduler)
+    }
 
     fun sendHandler(): AudioSendHandler = AudioPlayerSendHandler(player)
 }
